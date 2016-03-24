@@ -6,8 +6,6 @@ import pojos.Employee;
 
 //for reading from the command line
 import java.io.*;
-//File i/o
-import java.io.*;
 
 public class DataAccess {
 	
