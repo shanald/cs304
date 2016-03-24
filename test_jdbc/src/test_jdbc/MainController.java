@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import repository.DataAccess;
+import views.EmployeeView;
 
 public class MainController extends JFrame{
 
@@ -20,7 +21,7 @@ public class MainController extends JFrame{
 	public static void main(String args[])
 	{
 		//does the necessary initialization
-	   //DataAccess dbSingleton = DataAccess.getInstance();
+		DataAccess dbSingleton = DataAccess.getInstance();
 		 EventQueue.invokeLater(new Runnable() {
 		        
 	            @Override
@@ -54,7 +55,7 @@ public class MainController extends JFrame{
 
 	        
 	        //want it to be a view
-	        add(new JPanel(), BorderLayout.CENTER);
+	        add(new EmployeeView(), BorderLayout.CENTER);
 
 	        setSize(1200, 700);
 	        setTitle("CPSC304 - GYM DATABASE APP");

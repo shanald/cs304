@@ -1,5 +1,10 @@
 package views;
 
-public class EmployeeView {
+import javax.swing.*;
 
+public class EmployeeView extends JPanel{
+	
+	public EmployeeView(){
+		
+	}
 }

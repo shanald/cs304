@@ -30,6 +30,7 @@ public class DataAccess {
 		String username = "ora_i0l8";
 		String password = "a33435124";
 		try {
+			DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
 			con = DriverManager.getConnection(connectURL,username,password);
 			System.out.println("\nConnected to Oracle!");
 			return true;
