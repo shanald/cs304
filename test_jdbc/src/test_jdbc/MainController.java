@@ -54,7 +54,7 @@ public class MainController extends JFrame{
 
 	        
 	        //want it to be a view
-	        add(new JTextArea(), BorderLayout.CENTER);
+	        add(new JPanel(), BorderLayout.CENTER);
 
 	        setSize(1200, 700);
 	        setTitle("CPSC304 - GYM DATABASE APP");
