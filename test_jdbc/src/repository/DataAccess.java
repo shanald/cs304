@@ -1,6 +1,8 @@
 package repository;
 //We need to import the java.sql package to use JDBC
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import pojos.Employee;
 
@@ -51,7 +53,43 @@ public class DataAccess {
 			System.out.println("Message: " + ex.getMessage());
 			return null;
 		}
+	}
+	
+	public List<Employee> EmployeeDemoSelectProject(List<String> projectionFields, 
+			String selectionField, String selectionValue, Boolean isInstructor, Boolean isManager){
+	
+		List<Employee> matchingEmployees = new ArrayList<Employee>();
+		StringBuilder query = 
+				new StringBuilder("SELECT " + String.join(",", projectionFields).replaceAll(" ","")
+						.replaceAll(",",", ") + " FROM employees e");
+		if(isInstructor){
+			query.append(" INNER JOIN instructors i ON i.id = e.id");
+		}
+		if(isManager){
+			query.append(" INNER JOIN managers m ON m.id = e.id");
+		}
+		if(!selectionValue.isEmpty()){
+			if(selectionField.equals("sin")){
+				query.append(" WHERE CAST(e.sin as VARCHAR(25)) LIKE \'%" + selectionValue + "\'");
+			}else{
+				selectionValue.replaceAll(" ","");
+				query.append(" WHERE UPPER(e." + selectionField.replaceAll(" ","") + ") LIKE lower(" 
+				+ selectionValue + ") || \'%\'");
+			}
+		}
 		
+		System.out.println(query.toString());
+		try{
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(query.toString());
+			//NEED TO TRANSLATE RESULT TO SET OF EMPLOYEES
+		}catch (SQLException ex){
+			System.out.println("Message: " + ex.getMessage());
+			return null;
+		}
+		
+		
+		return matchingEmployees;
 	}
 	
 	
