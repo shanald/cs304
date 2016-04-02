@@ -8,6 +8,8 @@ import java.sql.Statement;
 
 
 public class Membership {
+	
+	
 	int customerID;
 	char type;
 	int validFrom;
@@ -43,7 +45,7 @@ public class Membership {
 	public double fees() {
 		return fees;
 	}
-	
+//	 static Membership m = new Membership(con);
 
 	public void addMemberShip(int customerID, char type, int validFrom, int validTo,
 			double amountPaid, double fees){
@@ -51,29 +53,31 @@ public class Membership {
 			DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
 		
 		
-			con = DriverManager.getConnection( "jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1522:ug",
+			con = DriverManager.getConnection( "jdbc:oracle:thin:@localhost:1522:ug",
 					"ora_s4t8", "a38993127");
 	 
 		Statement stmt = con.createStatement();
 		Statement stmt1 = con.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT CustomerID FROM Customers"); // RETRIEVE CUSTOMERIDS FROM CUSTOMERS
-		ResultSet rs1 = stmt1.executeQuery("Select CustomerID FROM Membership"); // RETRIEVE CUSTOMERIDS FROM MEMBERSHIP
+		ResultSet rs = stmt.executeQuery("SELECT customerID FROM Customers"); // RETRIEVE CUSTOMERIDS FROM CUSTOMERS
+		ResultSet rs1 = stmt1.executeQuery("Select customerID FROM Membership"); // RETRIEVE CUSTOMERIDS FROM MEMBERSHIP
 			
 		// INSERT INTO MEMBERSHIP TABLE
 				while (rs.next()) {
+					while (rs1.next()) {
 					if (rs.equals(rs1)); 
 					Statement stmt2 = con.createStatement();
 					int rs2 = stmt2.executeUpdate("INSERT INTO Membership " +
-			                   "VALUES('customerId', 'type', 'validFrom', 'validTo', 'amountpaid', 'fees')");
+			                   "VALUES('customerID', 'type', 'validFrom', 'validTo', 'amountpaid', 'fees')");
 				
-					//	System.out.println(rs2.getString(1));
-					
+					ResultSet rs3 = stmt.executeQuery("SELECT * FROM Membersip");
+				//	System.out.println(rs2);
+				
 					stmt.close();
 					stmt1.close();
 					stmt2.close();
 					con.close();
-					
-					}
+				}	
+				}
 			
 	
 	} catch (SQLException e) {
@@ -82,7 +86,7 @@ public class Membership {
 	} }
 	
 	
-	public void cancelMembership(int CustomerId, char type, int validFrom, int validTo, double amountPaid,
+	public void cancelMembership(int customerID, char type, int validFrom, int validTo, double amountPaid,
 			double fees, boolean matchedID) {
 		
 		try {
@@ -96,14 +100,17 @@ public class Membership {
 		
 		ResultSet rs = stmt.executeQuery("SELECT customerID FROM Customers"); // RETRIEVE CUSTOMERIDS FROM CUSTOMERS
 		
-		ResultSet rs1 = stmt1.executeQuery("SELECT CustomerID FROM Membership"); // RETRIEVE CUSTOMERIDS FROM MEMBERSHIP
+		ResultSet rs1 = stmt1.executeQuery("SELECT customerID FROM Membership"); // RETRIEVE CUSTOMERIDS FROM MEMBERSHIP
 		while (rs.next()) {
+			
 			while (rs1.next()) {
-				matchedID = (rs.getArray(customerID) == rs1.getArray(customerID ));
+				//matchedID = (rs.getArray(customerID) == rs1.getArray(customerID ));
+				if (rs.getInt(1) == rs1.getInt(1)) {
 				ResultSet rs2 = stmt.executeQuery("DELETE FROM Membership WHERE matchedID = 'true'");
+				
 //				System.out.println(rs2.getString(1));
 				
-			
+				}
 			}
 			
 			
@@ -119,5 +126,11 @@ public class Membership {
 	}
 	
     }
+	
+//	public static void main(String[] args) throws SQLException {
+//	m.addMembership();
+//	}
+	
+	
 }
     
