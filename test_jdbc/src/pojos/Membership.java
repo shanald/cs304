@@ -108,7 +108,7 @@ public class Membership {
 				if (rs.getInt(1) == rs1.getInt(1)) {
 				ResultSet rs2 = stmt.executeQuery("DELETE FROM Membership WHERE matchedID = 'true'");
 				
-//				System.out.println(rs2.getString(1));
+   //				System.out.println(rs2.getString(1));
 				
 				}
 			}
